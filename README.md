@@ -5,7 +5,7 @@ A Symfony 7.4 REST API backend for the Coin Collection application.
 ## Requirements
 
 - PHP 8.2+
-- PostgreSQL 16+
+- MySQL 8.0+
 - Composer
 
 **For Docker:**
@@ -34,7 +34,7 @@ make up         # Start containers
 make down       # Stop containers
 make logs       # View logs
 make shell      # Access PHP container shell
-make db-shell   # Access PostgreSQL shell
+make db-shell   # Access MySQL shell
 make migrate    # Run migrations
 make jwt-keys   # Generate JWT keys
 make fresh      # Full setup (build + jwt + migrate)
@@ -46,7 +46,7 @@ make fresh      # Full setup (build + jwt + migrate)
 |---------|------|-------------|
 | nginx | 8080 | Web server |
 | php | 9000 | PHP-FPM (internal) |
-| database | 5432 | PostgreSQL |
+| database | 3306 | MySQL |
 
 ---
 
@@ -69,7 +69,7 @@ cp .env .env.local
 Edit `.env.local`:
 
 ```env
-DATABASE_URL="postgresql://username:password@127.0.0.1:5432/coin_collection?serverVersion=16&charset=utf8"
+DATABASE_URL="mysql://username:password@127.0.0.1:3306/coin_collection?serverVersion=8.0&charset=utf8mb4"
 JWT_PASSPHRASE=your_secure_passphrase
 CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
 ```
