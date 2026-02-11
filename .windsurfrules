@@ -1,0 +1,58 @@
+# Coin Collection Backend — AI Agent Rules
+
+These rules MUST be followed strictly in every interaction with this project.
+
+## Tech Stack
+
+- **Framework**: Symfony 7.4 with API Platform
+- **Database**: MySQL (Doctrine ORM + Doctrine Migrations)
+- **Auth**: LexikJWTAuthenticationBundle, OAuth2 (Google, Facebook)
+- **PHP version**: >= 8.2
+
+## Coding Standards
+
+1. **PSR-12**: All code MUST follow PSR-12 coding standards. No exceptions.
+2. **PHP Attributes**: Always use PHP 8+ attributes instead of annotations or docblock-based configuration (e.g., `#[ORM\Entity]`, `#[ApiResource]`, `#[Route]`).
+3. **Design Patterns**: Apply design patterns (Repository, Strategy, Factory, DTO, etc.) where applicable. Do not over-engineer, but do not write procedural code in services either.
+
+## API Platform
+
+- Use API Platform for all API resource definitions.
+- Define API resources using PHP attributes (`#[ApiResource]`, `#[ApiFilter]`, `#[Get]`, `#[Post]`, etc.).
+- Use DTOs for input/output when the entity shape differs from the API shape.
+- Use state providers and state processors instead of custom controllers when possible.
+
+## Environment & Secrets
+
+- **NEVER** put sensitive values (database credentials, JWT secrets, API keys, OAuth secrets) in `.env`. Use `.env.local` for all sensitive/local-specific values.
+- `.env` should only contain non-sensitive defaults and structural variable definitions.
+- `.env.local` is gitignored and must be used for real credentials.
+
+## Static Analysis & Linting
+
+### PHPCS (PHP_CodeSniffer)
+- PHPCS **must** be installed as a dev dependency (`squizlabs/php_codesniffer`). If missing, install it before proceeding.
+- Standard: **PSR12**.
+- Always run `vendor/bin/phpcs --standard=PSR12 src/` after making changes to verify compliance.
+- Fix violations with `vendor/bin/phpcbf --standard=PSR12 src/` when possible.
+
+### PHPStan
+- PHPStan **must** be installed as a dev dependency (`phpstan/phpstan`). If missing, install it before proceeding.
+- Also install `phpstan/phpstan-symfony` and `phpstan/phpstan-doctrine` for framework-aware analysis.
+- **Level: 9** (maximum strictness). Always run `vendor/bin/phpstan analyse src/ --level=9`.
+- All code must pass PHPStan level 9 with zero errors before considering a task complete.
+
+## Database
+
+- Use **MySQL** as the database engine. All Doctrine configurations must target MySQL.
+- Use Doctrine Migrations for all schema changes — never modify the database manually.
+- Use UUIDs (`symfony/uid`) for entity identifiers where applicable.
+
+## General Rules
+
+- Never commit `.env.local` or any file containing real secrets.
+- Keep controllers thin; business logic belongs in services.
+- Use constructor injection (autowiring) for dependency injection.
+- Use strict types (`declare(strict_types=1);`) in every PHP file.
+- Type-hint everything: parameters, return types, properties. No mixed types unless absolutely necessary.
+- Write meaningful commit-ready code — no TODOs, no placeholder logic, no half-implementations.
